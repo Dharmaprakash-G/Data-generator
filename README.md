@@ -1,46 +1,128 @@
-📦 Dummy Data Generator
+# GeneratorX
 
-A schema-based dummy / synthetic data generator for developers who need realistic test data without downloading datasets from the internet.
+A schema-based dummy / synthetic data generator for developers who need realistic test data without downloading datasets from the internet. Perfect for hackathons, MVP development, backend & frontend testing, personal projects, and learning demos.
 
-Perfect for:
+## Getting Started
 
-Hackathons
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-MVP development
+### Prerequisites
 
-Backend & frontend testing
+You need Python 3.7+ and pip installed on your system. Check your Python version:
 
-Personal projects
+```bash
+python --version
+```
 
-Learning & demos
+### Installing
 
-🚀 What This Tool Does
+Follow these steps to get a development environment running:
 
-Instead of searching for datasets, you simply:
+**Step 1:** Clone the repository
 
-Define your own table name
+```bash
+git clone https://github.com/USERNAME/dummy-data-generator.git
+cd dummy-data-generator
+```
 
-Define column names & data types
+**Step 2:** Install dependencies
 
-Choose number of rows
+```bash
+pip install -r requirements.txt
+```
 
-Generate realistic dummy data
+**Step 3:** Create your schema file (or use the provided example)
 
-Export as CSV (more formats coming)
+```bash
+# Use the included schema.json or create your own
+cat schema.json
+```
 
-✨ Key Features
+**Step 4:** Generate your first dataset
 
-🔧 Schema-driven (you control everything)
+```bash
+python main.py schema.json output.csv
+```
 
-📄 Generate realistic fake data (names, emails, cities, dates, etc.)
+You should see output like:
 
-🧪 Ideal for testing when real data doesn’t exist
+```
+✅ Generated 10 rows into output.csv
+```
 
-⚡ Fast & lightweight
+## Running the tests
 
-🛠 Easy to extend (JSON, SQL, API, UI)
+Explain how to run the automated tests for this system (coming soon)
 
-📁 Project Structure
+### Break down into end to end tests
+
+End-to-end tests will verify the complete data generation pipeline from schema parsing to CSV export.
+
+```bash
+# Example (future implementation)
+python -m pytest tests/test_e2e.py
+```
+
+### And coding style tests
+
+Coding style tests ensure code quality and consistency using flake8 and black.
+
+```bash
+# Example (future implementation)
+flake8 generator/ exporters/
+black --check .
+```
+
+## Deployment
+
+This tool is designed for local development use. For production deployment:
+
+* **API Version**: Deploy the FastAPI REST API (roadmap feature) using Docker or cloud services like AWS/GCP
+* **Web UI**: Host the web interface (roadmap feature) on platforms like Vercel or Netlify
+* **CLI Tool**: Package as a PyPI package for easy installation via `pip install dummy-data-generator`
+
+## Built With
+
+* [Faker](https://faker.readthedocs.io/) - Python library for generating fake data
+* [Python](https://www.python.org/) - Core programming language
+* [JSON](https://www.json.org/) - Schema definition format
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+**Quick contribution guide:**
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a pull request
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/USERNAME/dummy-data-generator/tags).
+
+## Authors
+
+* **DP** - *Initial work* - [USERNAME](https://github.com/USERNAME)
+
+See also the list of [contributors](https://github.com/USERNAME/dummy-data-generator/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Hat tip to the Faker library for making realistic data generation simple
+* Inspired by the need for better developer tooling in hackathons
+* Thanks to all contributors and users who help improve this project
+
+---
+
+## 📁 Project Structure
+
+```
 dummy_data_tool/
 │
 ├── generator/
@@ -54,12 +136,13 @@ dummy_data_tool/
 ├── main.py              # CLI entry point
 ├── requirements.txt
 └── README.md
+```
 
-🧩 Schema Format
+## 🧩 Schema Format
 
-You define your dataset using a simple JSON schema.
+Define your dataset using a simple JSON schema:
 
-Example: schema.json
+```json
 {
   "table_name": "users",
   "rows": 10,
@@ -72,93 +155,37 @@ Example: schema.json
     { "name": "created_at", "type": "date" }
   ]
 }
+```
 
-🛠 Supported Data Types (v1)
-Type	Description
-int	Random integers (min/max supported)
-full_name	Realistic full names
-email	Fake but valid emails
-city	City names
-date	Random date (last 2 years)
-uuid	UUID v4
-boolean	true / false
+## 🛠 Supported Data Types
 
-More types can be added easily.
+| Type | Description |
+|------|-------------|
+| `int` | Random integers (min/max supported) |
+| `full_name` | Realistic full names |
+| `email` | Fake but valid emails |
+| `city` | City names |
+| `date` | Random date (last 2 years) |
+| `uuid` | UUID v4 |
+| `boolean` | true / false |
 
-⚙️ Installation
-1. Clone the repository
-git clone https://github.com/USERNAME/dummy-data-generator.git
-cd dummy-data-generator
+## 📄 Sample Output
 
-2. Install dependencies
-pip install -r requirements.txt
-
-▶️ Usage
-
-Run the generator using the CLI:
-
-python main.py schema.json output.csv
-
-Output
-✅ Generated 10 rows into output.csv
-
-📄 Sample Output (CSV)
+```csv
 id,name,email,age,city,created_at
 101,Rahul Sharma,rahul@gmail.com,28,Mumbai,2024-02-12
 102,Ananya Verma,ananya@gmail.com,35,Delhi,2023-11-08
+```
 
-🧠 Why This Project?
+## 🚧 Roadmap
 
-Most dummy data tools:
+- [ ] JSON export
+- [ ] SQL export (MySQL / PostgreSQL)
+- [ ] Table relationships (foreign keys)
+- [ ] FastAPI REST API
+- [ ] Web UI
+- [ ] AI-assisted schema generation
 
-Force predefined schemas
+---
 
-Don’t match real project needs
-
-Require internet datasets
-
-This tool lets you:
-
-Define your own schema and instantly generate production-like data.
-
-🚧 Roadmap
-
-Planned features:
-
- JSON export
-
- SQL export (MySQL / PostgreSQL)
-
- Table relationships (foreign keys)
-
- FastAPI REST API
-
- Web UI
-
- AI-assisted schema generation
-
-🤝 Contributing
-
-Contributions are welcome!
-
-Fork the repo
-
-Create a feature branch
-
-Commit changes
-
-Open a pull request
-
-📜 License
-
-MIT License
-Free to use, modify, and distribute.
-
-🙌 Author
-
-Built by DP
-For developers who want control over their test data.
-
-⭐ If you find this useful
-
-Give the repo a star — it helps more developers discover it!
+⭐ **If you find this useful, give the repo a star — it helps more developers discover it!**
