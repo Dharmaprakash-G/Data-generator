@@ -1,0 +1,35 @@
+{
+    "table_name": "users",
+    "rows": 10000,
+    "columns": [
+        {
+            "name": "id",
+            "type": "int",
+            "min": 1,
+            "max": 1000
+        },
+        {
+            "name": "name",
+            "type": "full_name"
+        },
+        {
+            "name": "email",
+            "type": "email",
+            "unique": true
+        },
+        {
+            "name": "age",
+            "type": "int",
+            "min": 18,
+            "max": 60
+        },
+        {
+            "name": "city",
+            "type": "city"
+        },
+        {
+            "name": "created_at",
+            "type": "date"
+        }
+    ]
+}
