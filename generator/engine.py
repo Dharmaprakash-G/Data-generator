@@ -1,36 +1,55 @@
 from generator.types import generate_value 
+import random
 
-def generate_data(schema):
-    rows = schema["rows"]
-    columns = schema["columns"]
 
-    data = []
-    unique_trackers = {}
+def generate_dataset(dataset_schema : dict):
+    
 
-    for col in columns:
-        if col.get("unique"):
-            unique_trackers[col["name"]] = set()
+    generate_data = {}
+    value_registry = {}
 
-    for _ in range(rows):
-        row = {}
+    for table in dataset_schema["tables"]:
+        table_name =  table["table_name"]
+        rows = table["rows"]
+        columns = table["columns"]
 
+        table_row = []
+        value_registry[table_name] = {}
+
+        #initialize registry for each column
         for col in columns:
-            col_name = col["name"]
-            col_type = col["type"]
+            value_registry[table_name][col["name"]] = []
 
 
-            while True:
-                value = generate_value(col_type,col)
+        for _ in range(rows):
+            row = {}
 
-                if col.get("unique"):
-                    if value in unique_trackers[col_name]:
-                        continue
+            for col in columns:
+                col_name = col["name"]
+                col_type = col["type"]
 
-                    unique_trackers[col_name].add(value)
+                # 🔗 HANDLE RELATIONSHIP
+                if col.get("ref"):
+                    ref_table = col["ref"]["table"]
+                    ref_column = col["ref"]["column"]
 
-                row[col_name] = value 
-                break
+                    parent_values = value_registry[ref_table][ref_column]
 
-        data.append(row)
+                    if not parent_values:
+                        raise ValueError(
+                            f"No values fount for reference {ref_table}.{ref_column}"
+                        )
 
-    return data
+                    value = random.choice(parent_values)
+
+                else:
+                    value = generate_value(col_type, col)
+
+                row[col_name] = value
+                value_registry[table_name][col_name].append(value)
+
+            table_row.append(row)
+
+        generate_data[table_name] = table_row
+
+    return generate_data

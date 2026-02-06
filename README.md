@@ -1,6 +1,7 @@
 # GeneratorX
+Schema-driven data generation engine
 
-A schema-based dummy / synthetic data generator for developers who need realistic test data without downloading datasets from the internet. Perfect for hackathons, MVP development, backend & frontend testing, personal projects, and learning demos.
+A schema-based synthetic data generator for developers who need realistic test data without downloading datasets from the internet. Perfect for hackathons, MVP development, backend & frontend testing, personal projects, and learning demos.
 
 ## Getting Started
 

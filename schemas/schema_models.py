@@ -14,6 +14,14 @@ class ColumnType(str, Enum):
     UUID = "uuid"
     BOOLEAN = "boolean"
 
+
+class RefSchema(BaseModel):
+    table: str
+    column: str
+
+
+
+
 class ColumnSchema(BaseModel):
     name: str
     type: ColumnType
@@ -22,6 +30,8 @@ class ColumnSchema(BaseModel):
     min: Optional[int] = None
     max: Optional[int] = None
     unique: Optional[bool] = False
+
+    ref: Optional[RefSchema] = None
 
     @validator("name")
     def name_must_not_ne_empty(cls, v):
@@ -62,3 +72,43 @@ class TableSchema(BaseModel):
 
         return v
 
+class DatasetSchema(BaseModel):
+    tables: List[TableSchema]
+
+    @validator("tables")
+    def tables_must_not_be_empty(cls, v):
+        if not v:
+            raise ValueError("dataset must contain at least one table")
+        return v
+
+        @root_validator
+        def validate_references(cls, values):
+            tables = values.get("tables", [])
+
+            table_map = {
+                tables.table_name:table
+                for table in tables
+            }
+
+            for table in tables:
+                for column in table.columns:
+                    if column.ref:
+                        ref_table = column.ref.table
+                        ref_column = column.ref.column
+
+                        if ref_table not in table_map:
+                            raise ValueError(
+                                f"Table '{table.table_name}' references unknown table '{ref_table}'"
+                            )
+
+                        parent_columns = {
+                            col.name for col in table_map[ref_table].columns
+                        }
+
+                        if ref_column not in parent_columns:
+                            raise ValueError(
+                                f"Table '{table.table_name}' references unknown column "
+                                f"'{ref_column}' in table '{ref_table}'"
+                            )
+
+            return values

@@ -1,37 +1,32 @@
 from fastapi import FastAPI, Body, HTTPException
 from fastapi.responses import StreamingResponse
 
-from generator.engine import generate_data
+from generator.engine import generate_dataset
 from exporters.csv_exporter import generate_csv_string
-from schemas.schema_models import TableSchema
+from schemas.schema_models import DatasetSchema
 
 
 app = FastAPI(
-    title = "GeneratorX API",
-    description  = "Generate schema-based dummy data for testing",
+    title = "GeneratorX",
+    description  = "Schema-driven data generation engine",
     version = "1.0.0"
 )
 
 
 @app.post("/generate")
-def generate_dummy_data(schema: TableSchema): #schema from fastapi as json, FastAPI converts JSON → Python dict
+def generate_dataset_api(schema: DatasetSchema): #schema from fastapi as json, FastAPI converts JSON → Python dict
     try:
-        data = generate_data(schema.dict())
+        data = generate_dataset(schema.dict())
     except ValueError as e:
         raise HTTPException(status_code = 422, detail = str(e))
     
-    return {
-        "table" : schema.table_name,
-        "count" : len(data),
-        "rows" : data
-    }   
-
+    return data
 
 
 @app.post("/generate/csv")
-def generate_csv(schema: TableSchema):
+def generate_csv(schema: DatasetSchema):
     try:
-        data = generate_data(schema.dict())
+        data = generate_dataset(schema.dict())
     except ValueError as e:
         raise HTTPException(status_code = 422, detail = str(e))
 
