@@ -1,14 +1,16 @@
 from generator.types import generate_value 
+from generator.dependency import order_tables_by_dependency
 import random
 
 
 def generate_dataset(dataset_schema : dict):
     
-
     generate_data = {}
     value_registry = {}
 
-    for table in dataset_schema["tables"]:
+    ordered_tables = order_tables_by_dependency(dataset_schema["tables"])
+    
+    for table in ordered_tables:
         table_name =  table["table_name"]
         rows = table["rows"]
         columns = table["columns"]
