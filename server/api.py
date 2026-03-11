@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Body, HTTPException
 from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 from generator.engine import generate_dataset
 from schemas.schema_models import DatasetSchema
@@ -11,6 +12,16 @@ app = FastAPI(
     description  = "Schema-driven data generation engine",
     version = "2.0.0"
 )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = ["http://localhost:5173"],
+    allow_credentials = True,
+    allow_methods = ["*"],
+    allow_headers = ["*"],
+)
+
+
 
 
 @app.get("/")
@@ -45,7 +56,7 @@ def generate_zip(schema: DatasetSchema):
 
     return StreamingResponse(
         zip_buffer,
-        media_type = "applecation/zip",
+        media_type = "application/zip",
         headers = {
             "Content-Disposition": 'attachment; filename = "generatorX_dataset.zip"'
         }

@@ -8,8 +8,13 @@ faker = Faker()
 
 def generate_value(col_type: ColumnType, config, used_value = None):
     if col_type == ColumnType.INT:
-        min_val = config.get("min", 0)
-        max_val = config.get("max", 10000)
+        min_val = config.get("min")
+        max_val = config.get("max")
+
+        if min_val is None :
+            min_val = 0
+        if max_val is None:
+            max_val = 10000
 
         if min_val > max_val:
             raise ValueError(
@@ -21,6 +26,39 @@ def generate_value(col_type: ColumnType, config, used_value = None):
     
     if col_type == ColumnType.FULL_NAME:
         return faker.name()
+
+    if col_type == ColumnType.FIRST_NAME:
+        return faker.first_name()
+
+    if col_type == ColumnType.LAST_NAME:
+        return faker.last_name()
+
+    if col_type == ColumnType.USER_NAME:
+        return faker.user_name()
+    
+    if col_type == ColumnType.PHONE:
+        return faker.phone_number()
+
+    if col_type == ColumnType.ADDRESS:
+        return faker.address()
+
+    if col_type == ColumnType.COUNTRY:
+        return faker.country()
+
+    if col_type == ColumnType.ZIP_CODE:
+        return faker.zipcode()
+    
+    if col_type == ColumnType.URL:
+        return faker.url()
+
+    if col_type == ColumnType.COMPANY:
+        return faker.company()
+    
+    if col_type == ColumnType.TEXT:
+        return faker.text()
+
+    if col_type == ColumnType.PARAGRAPH:
+        return faker.paragraph()
 
     if col_type == ColumnType.EMAIL:
         return faker.unique.email()

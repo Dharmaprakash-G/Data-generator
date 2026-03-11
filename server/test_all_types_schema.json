@@ -1,0 +1,28 @@
+{
+    "tables": [
+        {
+            "table_name": "all_types_test",
+            "rows": 5,
+            "columns": [
+                { "name": "id", "type": "int", "min": 1, "max": 1000 },
+                { "name": "full_name", "type": "full_name" },
+                { "name": "first_name", "type": "first_name" },
+                { "name": "last_name", "type": "last_name" },
+                { "name": "email", "type": "email", "unique": true },
+                { "name": "username", "type": "user_name" },
+                { "name": "phone", "type": "phone" },
+                { "name": "address", "type": "address" },
+                { "name": "city", "type": "city" },
+                { "name": "country", "type": "country" },
+                { "name": "zip_code", "type": "zip_code" },
+                { "name": "company", "type": "company" },
+                { "name": "website", "type": "url" },
+                { "name": "bio", "type": "text" },
+                { "name": "description", "type": "paragraph" },
+                { "name": "created_at", "type": "date" },
+                { "name": "uuid", "type": "uuid" },
+                { "name": "is_active", "type": "boolean" }
+            ]
+        }
+    ]
+}
