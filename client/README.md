@@ -1,73 +1,99 @@
-# React + TypeScript + Vite
+# GeneratorX — Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The frontend for GeneratorX, built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS 4**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Getting Started
 
-## React Compiler
+### Prerequisites
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Node.js 18+** and **npm**
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env` file in this directory (already included):
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```env
+VITE_API_BASE_URL = "http://127.0.0.1:8000"
 ```
+
+### Development Server
+
+```bash
+npm run dev
+```
+
+Opens at **http://localhost:5173**. Make sure the backend server is running.
+
+### Production Build
+
+```bash
+npm run build
+npm run preview
+```
+
+---
+
+## 🏗️ Project Structure
+
+```
+src/
+├── components/
+│   ├── generator/
+│   │   ├── TableBuilder.tsx       → Main table/column builder UI
+│   │   ├── ConfigPanel.tsx        → Table configuration (name, row count)
+│   │   ├── GenerateButton.tsx     → Trigger data generation
+│   │   ├── PreviewPanel.tsx       → Data preview display
+│   │   └── SchemaInput.tsx        → Schema input component
+│   └── layout/
+│       └── Container.tsx          → Layout wrapper
+├── pages/
+│   └── GeneratePage.tsx           → Main application page
+├── services/
+│   └── api.ts                     → Backend API client
+├── types/
+│   ├── enums.ts                   → Column type definitions
+│   └── generator.ts              → TypeScript interfaces (Table, Column, etc.)
+├── App.tsx                        → Root component
+├── main.tsx                       → Entry point
+└── index.css                      → Global styles
+```
+
+---
+
+## 🔌 API Integration
+
+The client communicates with the backend via a single endpoint:
+
+- **`POST /generate/zip`** — Sends the table schema as JSON, receives a ZIP file containing CSVs
+
+The API base URL is configured through the `VITE_API_BASE_URL` environment variable.
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology     | Version |
+|----------------|---------|
+| React          | 19      |
+| TypeScript     | 5.9     |
+| Vite           | 7.3     |
+| Tailwind CSS   | 4.1     |
+
+---
+
+## 📜 Available Scripts
+
+| Command           | Description                   |
+|--------------------|-------------------------------|
+| `npm run dev`      | Start development server      |
+| `npm run build`    | Build for production          |
+| `npm run preview`  | Preview production build      |
+| `npm run lint`     | Run ESLint                    |
