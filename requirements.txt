@@ -1,6 +1,4 @@
 faker
-pandas
 fastapi
-uvicorn
 pydantic
 google-generativeai
